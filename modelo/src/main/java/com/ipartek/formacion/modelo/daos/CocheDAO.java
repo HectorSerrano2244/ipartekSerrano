@@ -39,12 +39,12 @@ public class CocheDAO {
 		return c;
 	}
 
-	public Coche getByMatricula(String mat) {
+	public Coche getByMatricula(String matricula) {
 		Coche c = null;
 		try (Connection conn = ConnectionManager.getConnection();
 				CallableStatement cs = conn.prepareCall(SQL_GETMATRICULA);) {
 
-			cs.setString(1, mat);
+			cs.setString(1, matricula);
 
 			try (ResultSet rs = cs.executeQuery()) {
 				try {
