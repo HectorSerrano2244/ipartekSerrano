@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ipartek.formacion.modelo.daos.MultaDAO;
+import com.ipartek.formacion.modelo.pojo.Agente;
 import com.ipartek.formacion.modelo.pojo.Multa;
+import com.ipartek.formacion.service.AgenteService;
+import com.ipartek.formacion.service.impl.AgenteServiceImpl;
 
 import io.swagger.annotations.Api;
 
@@ -29,10 +32,12 @@ public class AgenteController {
 	MultaDAO multaDAO;
 	private ValidatorFactory factory;
 	private Validator validator;
+	private AgenteService agenteService;
 	
 	public AgenteController() {
 		super();
 		multaDAO = MultaDAO.getInstance();
+		agenteService = AgenteServiceImpl.getInstance();
 		factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
 	}
@@ -53,5 +58,27 @@ public class AgenteController {
 			response = new ResponseEntity<Multa>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return response;
+	}
+	
+	@RequestMapping( value= {"/api/agente/login/{placa}/{password}"}, method = RequestMethod.GET)
+	public ResponseEntity<Agente> login( 
+										@PathVariable String placa, 
+										@PathVariable String password ){		
+		
+		ResponseEntity<Agente> response = new ResponseEntity<Agente>(HttpStatus.FORBIDDEN);
+		try {
+			
+			Agente agente = agenteService.existe(placa, password);
+			if ( agente !=null ) {
+				response = new ResponseEntity<Agente>(agente, HttpStatus.OK);
+			}		
+			
+		}catch (Exception e) {
+			LOG.error(e);
+			response = new ResponseEntity<Agente>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return response;
+		
 	}
 }
