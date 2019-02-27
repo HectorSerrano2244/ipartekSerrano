@@ -16,6 +16,7 @@ public class CocheDAO {
 	private static CocheDAO INSTANCE = null;
 
 	private static final String SQL_GETMATRICULA = "{call pa_coche_getByMatricula(?)}";
+	private static final String SQL_GETBYID = "SELECT matricula, modelo, km FROM coche WHERE id = ?";
 
 	// constructor privado, solo acceso por getInstance()
 	private CocheDAO() {
@@ -32,7 +33,7 @@ public class CocheDAO {
 
 	private Coche rowMapper(ResultSet rs) throws SQLException {
 		Coche c = new Coche();
-		c.setId(rs.getLong("id"));
+		c.setId(rs.getInt("id"));
 		c.setMatricula(rs.getString("matricula"));
 		c.setModelo(rs.getString("modelo"));
 		c.setKm(rs.getInt("km"));
@@ -45,6 +46,29 @@ public class CocheDAO {
 				CallableStatement cs = conn.prepareCall(SQL_GETMATRICULA);) {
 
 			cs.setString(1, matricula);
+
+			try (ResultSet rs = cs.executeQuery()) {
+				try {
+					while (rs.next()) {
+						c = rowMapper(rs);
+					}
+				} catch (Exception e) {
+					LOG.warn(e);
+				}
+			}
+
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return c;
+	}
+	
+	public Coche getById(int id) {
+		Coche c = null;
+		try (Connection conn = ConnectionManager.getConnection();
+				CallableStatement cs = conn.prepareCall(SQL_GETBYID);) {
+
+			cs.setInt(1, id);
 
 			try (ResultSet rs = cs.executeQuery()) {
 				try {

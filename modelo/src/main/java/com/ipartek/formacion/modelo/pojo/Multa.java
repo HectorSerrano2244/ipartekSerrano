@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class Multa {
-	private Long id;
+	private int id;
 	@NotNull
 	@Digits(fraction = 2, integer = 5)
 	private Double importe;
@@ -20,10 +20,10 @@ public class Multa {
 	private Agente agente;
 	private Coche coche;
 	
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public double getImporte() {
@@ -68,7 +68,8 @@ public class Multa {
 	public void setCoche(Coche coche) {
 		this.coche = coche;
 	}
-	public Multa(Long id, Double importe, String concepto, Date fechaAlta, Date fechaModificacion, Date fechaBaja, Agente agente, Coche coche) {
+	
+	public Multa(int id, Double importe, String concepto, Date fechaAlta, Date fechaModificacion, Date fechaBaja, Agente agente, Coche coche) {
 		this();
 		setId(id);
 		setImporte(importe);
@@ -79,9 +80,10 @@ public class Multa {
 		setAgente(agente);
 		setCoche(coche);
 	}
+	
 	public Multa() {
 		super();
-		this.id=-1l;
+		this.id=-1;
 		this.importe=0.0;
 		this.concepto="";
 		this.fechaAlta=null;
@@ -90,6 +92,7 @@ public class Multa {
 		this.agente=new Agente();
 		this.coche=new Coche();
 	}
+	
 	@Override
 	public String toString() {
 		return "Multa [id=" + id + ", importe=" + importe + ", concepto=" + concepto + ", fechaAlta=" + fechaAlta + ", agente="
