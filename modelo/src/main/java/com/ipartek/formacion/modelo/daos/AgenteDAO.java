@@ -152,8 +152,11 @@ public class AgenteDAO {
 	private Multa rowMapperMulta(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
 		Coche c = new Coche();
-		Timestamp timestampalta = rs.getTimestamp("fecha_alta");
-		m.setFechaAlta(new java.util.Date(timestampalta.getTime()));
+		//Timestamp timestampalta = rs.getTimestamp("fecha_alta");
+		//m.setFechaAlta(new java.util.Date(timestampalta.getTime()));
+		//Timestamp timestampalta = rs.getTimestamp("fecha_alta");
+		m.setFechaAlta(rs.getDate("fecha_alta"));
+		/*
 		if (isBaja) {
 			Timestamp timestampbaja = rs.getTimestamp("fecha_baja");
 			if(timestampbaja==null) {
@@ -162,16 +165,14 @@ public class AgenteDAO {
 				m.setFechaBaja(new Date(timestampbaja.getTime()));
 			}
 			
-		}
+		}*/
 		m.setId(rs.getInt("id"));
 		c.setMatricula(rs.getString("matricula"));
-		if (isGetById) {
-			m.setImporte(rs.getDouble("importe"));
-			m.setConcepto(rs.getString("concepto"));
-			c.setId(rs.getInt("id_coche"));
-			c.setModelo(rs.getString("modelo"));
-			c.setKm(rs.getInt("km"));
-		}
+		m.setImporte(rs.getDouble("importe"));
+		m.setConcepto(rs.getString("concepto"));
+		//c.setId(rs.getInt("id_coche"));
+		c.setModelo(rs.getString("modelo"));
+		c.setKm(rs.getInt("km"));
 		m.setCoche(c);
 		return m;
 	}
