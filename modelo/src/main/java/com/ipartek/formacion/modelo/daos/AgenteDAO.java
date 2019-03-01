@@ -119,27 +119,6 @@ public class AgenteDAO {
 		return multas;
 	}
 	
-	public Multa multar(int idCoche, int idAgente, String concepto, float importe) throws SQLException {
-		//isGetById = false;
-		Multa m = new Multa();
-		try (Connection conn = ConnectionManager.getConnection();
-				CallableStatement cs = conn.prepareCall(SQL_INSERT);) {
-			cs.setDouble(1, importe);
-			cs.setString(2, concepto);
-			cs.setLong(3, idCoche);
-			cs.setLong(4, idAgente);
-			cs.registerOutParameter(5, Types.INTEGER);
-			if (cs.executeUpdate() == 1) {
-				m.setId(cs.getInt(5));
-				m.setImporte((double)importe);
-				m.setConcepto(concepto);
-				m.setAgente(getById(idAgente));
-				m.setCoche(daoCoche.getById(idCoche));
-			}
-		}
-		return m;
-	}
-	
 	private Agente rowMapperAgente(ResultSet rs) throws SQLException {
 		Agente a = new Agente();
 		a.setId(rs.getInt("id"));

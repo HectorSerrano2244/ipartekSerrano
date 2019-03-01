@@ -20,6 +20,8 @@ public class MultaDAO {
 	private boolean isGetById = false;
 	private boolean isBaja = false;
 	
+	AgenteDAO daoAgente;
+	CocheDAO daoCoche;
 	
 	private static final String MULTAS_ANULADAS = "baja";
 	//private static final String MULTAS_ACTIVAS = "activas";
@@ -32,6 +34,8 @@ public class MultaDAO {
 	// constructor privado, solo acceso por getInstance()
 	private MultaDAO() {
 		super();
+		daoAgente = daoAgente.getInstance();
+		daoCoche = daoCoche.getInstance();
 	}
 
 	public synchronized static MultaDAO getInstance() {
@@ -121,6 +125,27 @@ public class MultaDAO {
 		}
 		return resul;
 
+	}
+	
+	public Multa multar(int idCoche, int idAgente, String concepto, float importe) throws SQLException {
+		//isGetById = false;
+		Multa m = new Multa();
+		try (Connection conn = ConnectionManager.getConnection();
+				CallableStatement cs = conn.prepareCall(SQL_INSERT);) {
+			cs.setDouble(1, importe);
+			cs.setString(2, concepto);
+			cs.setLong(3, idCoche);
+			cs.setLong(4, idAgente);
+			cs.registerOutParameter(5, Types.INTEGER);
+			if (cs.executeUpdate() == 1) {
+				m.setId(cs.getInt(5));
+				m.setImporte((double)importe);
+				m.setConcepto(concepto);
+				m.setAgente(daoAgente.getById(idAgente));
+				m.setCoche(daoCoche.getById(idCoche));
+			}
+		}
+		return m;
 	}
 
 	public boolean update(Multa m, String opr) throws SQLException {
