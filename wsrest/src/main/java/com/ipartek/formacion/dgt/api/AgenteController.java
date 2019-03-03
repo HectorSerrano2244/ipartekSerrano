@@ -96,9 +96,8 @@ public class AgenteController {
 	}
 	
 	@RequestMapping(value = { "/api/agente/multa/{idmulta}/{accion}" }, method = RequestMethod.PATCH)
-	public ResponseEntity<Multa> update(@PathVariable int idmulta, @PathVariable String accion) {
+	public ResponseEntity<Multa> update(@PathVariable int idmulta, @PathVariable String accion, @RequestBody Multa multa) {
 
-		Multa multa = new Multa();
 		multa.setId(idmulta);
 		ResponseEntity<Multa> response = new ResponseEntity<Multa>(HttpStatus.INTERNAL_SERVER_ERROR);
 		try {
