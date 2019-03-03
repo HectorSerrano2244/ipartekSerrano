@@ -23,14 +23,14 @@ public class AgenteDAO {
 	
 	private static AgenteDAO INSTANCE = null;
 	
-	private static final String MULTAS_ANULADAS = "baja";
+	private static final String MULTAS_ANULADAS = "inactivas";
 	
 	private static final String SQL_LOGIN = "{call pa_login(?, ?)}";
 	private static final String SQL_GETALL_BYUSER = "{call pa_multa_getByAgenteId(?,?)}";
 	private static final String SQL_GETBYID = "{call pa_agente_getById(?)}";
 	private static final String SQL_INSERT = "{call pa_multa_insert(?,?,?,?,?)}";
 	
-	private boolean isBaja = false;
+	private boolean isInactivas = false;
 	private boolean isGetById = false;
 	
 	// constructor privado, solo acceso por getInstance()
@@ -90,19 +90,19 @@ public class AgenteDAO {
 		return a;
 	}
 	
-	public ArrayList<Multa> obtenerMultas(long id/*, String opm*/) {
+	public ArrayList<Multa> obtenerMultas(long id, String estado) {
 
 		ArrayList<Multa> multas = new ArrayList<Multa>();
 		try (Connection conn = ConnectionManager.getConnection();
 				CallableStatement cs = conn
 						.prepareCall(SQL_GETALL_BYUSER);) {
-			if (MULTAS_ANULADAS.equals("nobaja")) {
-				isBaja = true;
+			if (MULTAS_ANULADAS.equals("inactivas")) {
+				isInactivas = true;
 			} else {
-				isBaja = false;
+				isInactivas = false;
 			}
 			cs.setLong(1, id);
-			cs.setString(2, "nobaja");
+			cs.setString(2, estado);
 			try (ResultSet rs = cs.executeQuery()) {
 				while (rs.next()) {
 					try {
@@ -131,20 +131,12 @@ public class AgenteDAO {
 	private Multa rowMapperMulta(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
 		Coche c = new Coche();
-		//Timestamp timestampalta = rs.getTimestamp("fecha_alta");
-		//m.setFechaAlta(new java.util.Date(timestampalta.getTime()));
-		//Timestamp timestampalta = rs.getTimestamp("fecha_alta");
 		m.setFechaAlta(rs.getDate("fecha_alta"));
-		/*
-		if (isBaja) {
-			Timestamp timestampbaja = rs.getTimestamp("fecha_baja");
-			if(timestampbaja==null) {
-				m.setFechaBaja(null);
-			}else {
-				m.setFechaBaja(new Date(timestampbaja.getTime()));
-			}
-			
-		}*/
+		
+		if (isInactivas) {
+			m.setFechaBaja(rs.getDate("fecha_baja"));
+		}
+		
 		m.setId(rs.getInt("id"));
 		c.setMatricula(rs.getString("matricula"));
 		m.setImporte(rs.getDouble("importe"));

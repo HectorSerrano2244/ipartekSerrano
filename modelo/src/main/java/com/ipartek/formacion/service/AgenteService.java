@@ -1,5 +1,6 @@
 package com.ipartek.formacion.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.ipartek.formacion.modelo.pojo.Agente;
@@ -30,11 +31,20 @@ public interface AgenteService {
 	Multa multar(int idCoche, int idAgente, String concepto, float importe) throws Exception;
 
 	/**
+	 * 
+	 * @param id
+	 * @param accion
+	 * @return
+	 * @throws SQLException 
+	 */
+	Multa update(int id, String accion) throws SQLException;
+	
+	/**
 	 * Todas las multas de un Agente
 	 * 
 	 * @param idAgente
 	 * @return listado, si no hay ninguna vacio, no null
 	 */
-	List<Multa> obtenerMultas(int id);
+	List<Multa> obtenerMultas(int id, String estado);
 
 }

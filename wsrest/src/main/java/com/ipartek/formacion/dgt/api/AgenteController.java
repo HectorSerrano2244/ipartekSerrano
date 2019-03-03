@@ -43,12 +43,12 @@ public class AgenteController {
 		validator = factory.getValidator();
 	}
 
-	@RequestMapping(value = { "/api/agente/{idagente}/multas" }, method = RequestMethod.GET)
-	public ResponseEntity<List<Multa>> obtenerMultas(@PathVariable int idagente) {
+	@RequestMapping(value = { "/api/agente/{idagente}/multas/{estado}" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Multa>> obtenerMultas(@PathVariable int idagente, @PathVariable String estado) {
 
 		ResponseEntity<List<Multa>> response = new ResponseEntity<List<Multa>>(HttpStatus.NOT_FOUND);
 		try {
-			List<Multa> multas = agenteService.obtenerMultas(idagente);
+			List<Multa> multas = agenteService.obtenerMultas(idagente, estado);
 			if (multas != null) {
 				response = new ResponseEntity<List<Multa>>(multas, HttpStatus.OK);
 			}
@@ -84,6 +84,25 @@ public class AgenteController {
 		ResponseEntity<Multa> response = new ResponseEntity<Multa>(HttpStatus.INTERNAL_SERVER_ERROR);
 		try {
 			multa = agenteService.multar(multa.getCoche().getId(), multa.getAgente().getId(), multa.getConcepto(), (float)multa.getImporte());
+			if (multa != null) {
+				response = new ResponseEntity<Multa>(multa, HttpStatus.CREATED);
+			}
+		} catch (NumberFormatException e) {
+			response = new ResponseEntity<Multa>(HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return response;
+	}
+	
+	@RequestMapping(value = { "/api/agente/multa/{idmulta}/{accion}" }, method = RequestMethod.PATCH)
+	public ResponseEntity<Multa> update(@PathVariable int idmulta, @PathVariable String accion) {
+
+		Multa multa = new Multa();
+		multa.setId(idmulta);
+		ResponseEntity<Multa> response = new ResponseEntity<Multa>(HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			multa = agenteService.update(idmulta, accion);
 			if (multa != null) {
 				response = new ResponseEntity<Multa>(multa, HttpStatus.OK);
 			}
