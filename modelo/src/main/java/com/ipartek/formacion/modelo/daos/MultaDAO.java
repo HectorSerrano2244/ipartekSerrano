@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -148,20 +149,25 @@ public class MultaDAO {
 		return m;
 	}
 
-	public boolean update(Multa m, String opr) throws SQLException {
+	public Multa update(int id, String accion) throws SQLException {
 
-		boolean resul = false;
+		Multa m = new Multa();
 		try (Connection conn = ConnectionManager.getConnection();
 				CallableStatement cs = conn.prepareCall(SQL_UPDATE);) {
 
-			cs.setLong(1, m.getId());
-			cs.setString(2, opr);
-			int affectedRows = cs.executeUpdate();
-			if (affectedRows == 1) {
-				resul = true;
+			cs.setInt(1, id);
+			cs.setString(2, accion);
+			if (cs.executeUpdate() == 1) {
+				if (accion == "recuperar") {
+					m.setFechaModificacion(new Date());
+					m.setFechaBaja(null);
+				}
+				else {
+					m.setFechaBaja(new Date());
+				}
 			}
 		}
-		return resul;
+		return m;
 
 	}
 
