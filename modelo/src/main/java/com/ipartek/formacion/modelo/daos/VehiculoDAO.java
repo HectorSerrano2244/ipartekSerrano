@@ -8,40 +8,40 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.ipartek.formacion.modelo.cm.ConnectionManager;
-import com.ipartek.formacion.modelo.pojo.Coche;
+import com.ipartek.formacion.modelo.pojo.Vehiculo;
 
-public class CocheDAO {
+public class VehiculoDAO {
 
-	private final static Logger LOG = Logger.getLogger(CocheDAO.class);
-	private static CocheDAO INSTANCE = null;
+	private final static Logger LOG = Logger.getLogger(VehiculoDAO.class);
+	private static VehiculoDAO INSTANCE = null;
 
 	private static final String SQL_GETMATRICULA = "{call pa_coche_getByMatricula(?)}";
 	private static final String SQL_GETBYID = "SELECT id, matricula, modelo, km FROM coche WHERE id = ?";
 
 	// constructor privado, solo acceso por getInstance()
-	private CocheDAO() {
+	private VehiculoDAO() {
 		super();
 	}
 
-	public synchronized static CocheDAO getInstance() {
+	public synchronized static VehiculoDAO getInstance() {
 
 		if (INSTANCE == null) {
-			INSTANCE = new CocheDAO();
+			INSTANCE = new VehiculoDAO();
 		}
 		return INSTANCE;
 	}
 
-	private Coche rowMapper(ResultSet rs) throws SQLException {
-		Coche c = new Coche();
-		c.setId(rs.getInt("id"));
-		c.setMatricula(rs.getString("matricula"));
-		c.setModelo(rs.getString("modelo"));
-		c.setKm(rs.getInt("km"));
-		return c;
+	private Vehiculo rowMapper(ResultSet rs) throws SQLException {
+		Vehiculo v = new Vehiculo();
+		v.setId(rs.getInt("id"));
+		v.setMatricula(rs.getString("matricula"));
+		v.setModelo(rs.getString("modelo"));
+		v.setKm(rs.getInt("km"));
+		return v;
 	}
 
-	public Coche getByMatricula(String matricula) {
-		Coche c = null;
+	public Vehiculo getByMatricula(String matricula) {
+		Vehiculo c = null;
 		try (Connection conn = ConnectionManager.getConnection();
 				CallableStatement cs = conn.prepareCall(SQL_GETMATRICULA);) {
 
@@ -63,8 +63,8 @@ public class CocheDAO {
 		return c;
 	}
 	
-	public Coche getById(int id) {
-		Coche c = null;
+	public Vehiculo getById(int id) {
+		Vehiculo c = null;
 		try (Connection conn = ConnectionManager.getConnection();
 				CallableStatement cs = conn.prepareCall(SQL_GETBYID);) {
 

@@ -1,12 +1,12 @@
 package com.ipartek.formacion.modelo.pojo;
 
-public class Coche {
+public class Vehiculo {
 	private int id;
 	private String matricula;
 	private String modelo;
 	private Integer km;
 	
-	public Coche(int id, String matricula, String modelo, Integer km) {
+	public Vehiculo(int id, String matricula, String modelo, Integer km) {
 		this();
 		setId(id);
 		setMatricula(matricula);
@@ -14,7 +14,7 @@ public class Coche {
 		setKm(km);
 	}
 
-	public Coche() {
+	public Vehiculo() {
 		super();
 		this.id=-1;
 		this.matricula="";
@@ -56,7 +56,7 @@ public class Coche {
 
 	@Override
 	public String toString() {
-		return "Coche [id=" + id + ", matricula=" + matricula + ", modelo=" + modelo + ", km=" + km + "]";
+		return "Vehiculo [id=" + id + ", matricula=" + matricula + ", modelo=" + modelo + ", km=" + km + "]";
 	}
 	
 	

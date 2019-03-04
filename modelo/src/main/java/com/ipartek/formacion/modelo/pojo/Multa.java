@@ -18,7 +18,7 @@ public class Multa {
 	private Date fechaModificacion;
 	private Date fechaBaja;
 	private Agente agente;
-	private Coche coche;
+	private Vehiculo vehiculo;
 	
 	public int getId() {
 		return id;
@@ -62,14 +62,14 @@ public class Multa {
 	public void setAgente(Agente agente) {
 		this.agente = agente;
 	}
-	public Coche getCoche() {
-		return coche;
+	public Vehiculo getVehiculo() {
+		return vehiculo;
 	}
-	public void setCoche(Coche coche) {
-		this.coche = coche;
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
 	}
 	
-	public Multa(int id, Double importe, String concepto, Date fechaAlta, Date fechaModificacion, Date fechaBaja, Agente agente, Coche coche) {
+	public Multa(int id, Double importe, String concepto, Date fechaAlta, Date fechaModificacion, Date fechaBaja, Agente agente, Vehiculo vehiculo) {
 		this();
 		setId(id);
 		setImporte(importe);
@@ -78,7 +78,7 @@ public class Multa {
 		setFechaModificacion(fechaModificacion);
 		setFechaBaja(fechaBaja);
 		setAgente(agente);
-		setCoche(coche);
+		setVehiculo(vehiculo);
 	}
 	
 	public Multa() {
@@ -90,13 +90,13 @@ public class Multa {
 		this.fechaModificacion=null; 
 		this.fechaBaja=null; 
 		this.agente=new Agente();
-		this.coche=new Coche();
+		this.vehiculo=new Vehiculo();
 	}
 	
 	@Override
 	public String toString() {
 		return "Multa [id=" + id + ", importe=" + importe + ", concepto=" + concepto + ", fechaAlta=" + fechaAlta + ", agente="
-				+ agente + ", coche=" + coche + "]";
+				+ agente + ", vehiculo=" + vehiculo + "]";
 	}
 	
 	

@@ -12,7 +12,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.ipartek.formacion.modelo.cm.ConnectionManager;
-import com.ipartek.formacion.modelo.pojo.Coche;
+import com.ipartek.formacion.modelo.pojo.Vehiculo;
 import com.ipartek.formacion.modelo.pojo.Multa;
 
 public class MultaDAO {
@@ -22,7 +22,7 @@ public class MultaDAO {
 	private boolean isBaja = false;
 	
 	AgenteDAO daoAgente;
-	CocheDAO daoCoche;
+	VehiculoDAO daoVehiculo;
 	
 	private static final String MULTAS_ANULADAS = "baja";
 	//private static final String MULTAS_ACTIVAS = "activas";
@@ -36,7 +36,7 @@ public class MultaDAO {
 	private MultaDAO() {
 		super();
 		daoAgente = daoAgente.getInstance();
-		daoCoche = daoCoche.getInstance();
+		daoVehiculo = daoVehiculo.getInstance();
 	}
 
 	public synchronized static MultaDAO getInstance() {
@@ -114,7 +114,7 @@ public class MultaDAO {
 
 			cs.setDouble(1, m.getImporte());
 			cs.setString(2, m.getConcepto());
-			cs.setLong(3, m.getCoche().getId());
+			cs.setLong(3, m.getVehiculo().getId());
 			cs.setLong(4, m.getAgente().getId());
 			cs.registerOutParameter(5, Types.INTEGER);
 			int affectedRows = cs.executeUpdate();
@@ -143,7 +143,7 @@ public class MultaDAO {
 				m.setImporte((double)importe);
 				m.setConcepto(concepto);
 				m.setAgente(daoAgente.getById(idAgente));
-				m.setCoche(daoCoche.getById(idCoche));
+				m.setVehiculo(daoVehiculo.getById(idCoche));
 			}
 		}
 		return m;
@@ -158,7 +158,7 @@ public class MultaDAO {
 			cs.setInt(1, id);
 			cs.setString(2, accion);
 			if (cs.executeUpdate() == 1) {
-				if (accion == "recuperar") {
+				if ("recuperar".equals(accion)) {
 					m.setFechaModificacion(new Date());
 					m.setFechaBaja(null);
 				}
@@ -173,7 +173,7 @@ public class MultaDAO {
 
 	private Multa rowMapper(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
-		Coche c = new Coche();
+		Vehiculo v = new Vehiculo();
 		Timestamp timestampalta = rs.getTimestamp("fecha_alta");
 		m.setFechaAlta(new java.util.Date(timestampalta.getTime()));
 		if (isBaja) {
@@ -186,15 +186,15 @@ public class MultaDAO {
 			
 		}
 		m.setId(rs.getInt("id"));
-		c.setMatricula(rs.getString("matricula"));
+		v.setMatricula(rs.getString("matricula"));
 		if (isGetById) {
 			m.setImporte(rs.getDouble("importe"));
 			m.setConcepto(rs.getString("concepto"));
-			c.setId(rs.getInt("id_coche"));
-			c.setModelo(rs.getString("modelo"));
-			c.setKm(rs.getInt("km"));
+			v.setId(rs.getInt("id_coche"));
+			v.setModelo(rs.getString("modelo"));
+			v.setKm(rs.getInt("km"));
 		}
-		m.setCoche(c);
+		m.setVehiculo(v);
 		return m;
 	}
 

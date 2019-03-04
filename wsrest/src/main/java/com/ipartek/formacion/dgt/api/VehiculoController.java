@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ipartek.formacion.modelo.daos.CocheDAO;
-import com.ipartek.formacion.modelo.pojo.Coche;
+import com.ipartek.formacion.modelo.daos.VehiculoDAO;
+import com.ipartek.formacion.modelo.pojo.Vehiculo;
 
 import io.swagger.annotations.Api;
 
@@ -25,13 +25,13 @@ public class VehiculoController {
 
 	private final static Logger LOG = Logger.getLogger(VehiculoController.class);
 	
-	CocheDAO cocheDAO;
+	VehiculoDAO vehiculoDAO;
 	private ValidatorFactory factory;
 	private Validator validator;
 
 	public VehiculoController() {
 		super();
-		cocheDAO = CocheDAO.getInstance();
+		vehiculoDAO = VehiculoDAO.getInstance();
 		factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
 	}
@@ -44,19 +44,19 @@ public class VehiculoController {
 	 */
 
 	@RequestMapping(value = { "/api/vehiculo/{matricula}" }, method = RequestMethod.GET)
-	public ResponseEntity<Coche> detalle(@PathVariable String matricula) {
+	public ResponseEntity<Vehiculo> detalle(@PathVariable String matricula) {
 
-		ResponseEntity<Coche> response = new ResponseEntity<Coche>(HttpStatus.NOT_FOUND);
+		ResponseEntity<Vehiculo> response = new ResponseEntity<Vehiculo>(HttpStatus.NOT_FOUND);
 		try {
-			Coche coche = cocheDAO.getByMatricula(matricula);
-			if (coche != null) {
-				response = new ResponseEntity<Coche>(coche, HttpStatus.OK);
+			Vehiculo vehiculo = vehiculoDAO.getByMatricula(matricula);
+			if (vehiculo != null) {
+				response = new ResponseEntity<Vehiculo>(vehiculo, HttpStatus.OK);
 			}
 		} catch (NumberFormatException e) {
-			response = new ResponseEntity<Coche>(HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<Vehiculo>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			LOG.error(e);
-			response = new ResponseEntity<Coche>(HttpStatus.INTERNAL_SERVER_ERROR);
+			response = new ResponseEntity<Vehiculo>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return response;
 	}

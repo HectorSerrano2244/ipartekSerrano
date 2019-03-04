@@ -13,12 +13,12 @@ import org.apache.log4j.Logger;
 
 import com.ipartek.formacion.modelo.cm.ConnectionManager;
 import com.ipartek.formacion.modelo.pojo.Agente;
-import com.ipartek.formacion.modelo.pojo.Coche;
+import com.ipartek.formacion.modelo.pojo.Vehiculo;
 import com.ipartek.formacion.modelo.pojo.Multa;
 
 public class AgenteDAO {
 	
-	CocheDAO daoCoche;
+	VehiculoDAO daoCoche;
 	private final static Logger LOG = Logger.getLogger(AgenteDAO.class);
 	
 	private static AgenteDAO INSTANCE = null;
@@ -36,7 +36,7 @@ public class AgenteDAO {
 	// constructor privado, solo acceso por getInstance()
 	private AgenteDAO() {
 		super();
-		daoCoche = CocheDAO.getInstance();
+		daoCoche = VehiculoDAO.getInstance();
 	}
 
 	public synchronized static AgenteDAO getInstance() {
@@ -130,7 +130,7 @@ public class AgenteDAO {
 	
 	private Multa rowMapperMulta(ResultSet rs) throws SQLException {
 		Multa m = new Multa();
-		Coche c = new Coche();
+		Vehiculo v = new Vehiculo();
 		m.setFechaAlta(rs.getDate("fecha_alta"));
 		
 		if (isInactivas) {
@@ -138,13 +138,13 @@ public class AgenteDAO {
 		}
 		
 		m.setId(rs.getInt("id"));
-		c.setMatricula(rs.getString("matricula"));
+		v.setMatricula(rs.getString("matricula"));
 		m.setImporte(rs.getDouble("importe"));
 		m.setConcepto(rs.getString("concepto"));
 		//c.setId(rs.getInt("id_coche"));
-		c.setModelo(rs.getString("modelo"));
-		c.setKm(rs.getInt("km"));
-		m.setCoche(c);
+		v.setModelo(rs.getString("modelo"));
+		v.setKm(rs.getInt("km"));
+		m.setVehiculo(v);
 		return m;
 	}
 }
