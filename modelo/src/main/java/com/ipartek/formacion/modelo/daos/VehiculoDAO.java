@@ -16,7 +16,7 @@ public class VehiculoDAO {
 	private static VehiculoDAO INSTANCE = null;
 
 	private static final String SQL_GETMATRICULA = "{call pa_coche_getByMatricula(?)}";
-	private static final String SQL_GETBYID = "SELECT id, matricula, modelo, km FROM coche WHERE id = ?";
+	private static final String SQL_GETBYID = "SELECT id, matricula, modelo, km FROM vehiculo WHERE id = ?";
 
 	// constructor privado, solo acceso por getInstance()
 	private VehiculoDAO() {
