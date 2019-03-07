@@ -10,7 +10,8 @@ import { VerMultasComponent } from './paginas/ver-multas/ver-multas.component';
 
 // Guards
 import { LoginGuard } from './guards/login.guard';
-import { Error404Component } from './components/error404/error404.component';
+import { Error404Component } from './paginas/error404/error404.component';
+import { ObjetivosComponent } from './paginas/objetivos/objetivos.component';
 
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'principal', component: PrincipalComponent, canActivate: [LoginGuard] },
   { path: 'ver-multas/:estado', component: VerMultasComponent, canActivate: [LoginGuard] },
   { path: 'multar', component: MultarComponent, canActivate: [LoginGuard] },
+  { path: 'objetivos', component: ObjetivosComponent, canActivate: [LoginGuard] },
   { path: '404', component: Error404Component },
   { path: '', pathMatch: 'full', redirectTo: 'principal'},
   { path: '**', pathMatch: 'full', redirectTo: '404'}

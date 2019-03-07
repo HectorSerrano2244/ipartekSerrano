@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Vehiculo } from '../models/vehiculo';
-import { GLOBAL } from '../globales';
+import { GLOBAL } from '../global';
 
 @Injectable({
   providedIn: 'root'

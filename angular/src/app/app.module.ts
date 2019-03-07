@@ -11,9 +11,9 @@ import { LoginComponent } from './paginas/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MultarComponent } from './paginas/multar/multar.component';
 import { VerMultasComponent } from './paginas/ver-multas/ver-multas.component';
-import { DataTablesModule } from 'angular-datatables';
-import { Error404Component } from './components/error404/error404.component';
+import { Error404Component } from './paginas/error404/error404.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { ObjetivosComponent } from './paginas/objetivos/objetivos.component';
 
 @NgModule({
   declarations: [
@@ -25,15 +25,15 @@ import { AlertComponent } from './components/alert/alert.component';
     MultarComponent,
     VerMultasComponent,
     Error404Component,
-    AlertComponent
+    AlertComponent,
+    ObjetivosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule, // Para usarlo con los services
     ReactiveFormsModule,
-    FormsModule,
-    DataTablesModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

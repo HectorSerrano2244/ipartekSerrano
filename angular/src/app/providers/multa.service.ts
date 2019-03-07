@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Multa } from '../models/multa';
-import { GLOBAL } from '../globales';
+import { GLOBAL } from '../global';
 
 @Injectable({
   providedIn: 'root'
