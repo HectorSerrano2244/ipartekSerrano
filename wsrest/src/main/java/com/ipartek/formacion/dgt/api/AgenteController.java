@@ -51,6 +51,7 @@ public class AgenteController {
 			List<Multa> multas = agenteService.obtenerMultas(idagente, estado);
 			if (multas != null) {
 				response = new ResponseEntity<List<Multa>>(multas, HttpStatus.OK);
+				LOG.debug(multas.size()+" Cargadas");
 			}
 		} catch (NumberFormatException e) {
 			response = new ResponseEntity<List<Multa>>(HttpStatus.BAD_REQUEST);
@@ -69,6 +70,7 @@ public class AgenteController {
 			Agente agente = agenteService.existe(placa, password);
 			if (agente != null) {
 				response = new ResponseEntity<Agente>(agente, HttpStatus.OK);
+				LOG.debug(agente+" logeado con éxito");
 			}
 		} catch (Exception e) {
 			LOG.error(e);
@@ -86,9 +88,13 @@ public class AgenteController {
 			multa = agenteService.multar(multa.getVehiculo().getId(), multa.getAgente().getId(), multa.getConcepto(), (float)multa.getImporte());
 			if (multa != null) {
 				response = new ResponseEntity<Multa>(multa, HttpStatus.CREATED);
+				LOG.info("El agente "+multa.getAgente().getNombre()+" ha registrado una multa");
+				LOG.info("Datos de la multa: ");
+				LOG.info("Concepto: "+multa.getConcepto()+"\n Importe: "+multa.getImporte()+"\n Modelo: "+multa.getVehiculo().getModelo()+"\n Matricula: "+multa.getVehiculo().getMatricula());
 			}
 		} catch (NumberFormatException e) {
 			response = new ResponseEntity<Multa>(HttpStatus.BAD_REQUEST);
+			LOG.error(e);
 		} catch (Exception e) {
 			LOG.error(e);
 		}
@@ -103,9 +109,16 @@ public class AgenteController {
 			multa = agenteService.update(idmulta, accion);
 			if (multa != null) {
 				response = new ResponseEntity<Multa>(multa, HttpStatus.OK);
+				if("recuperar".equals(accion)) {
+					LOG.info("Multa al coche "+multa.getVehiculo().getMatricula()+" recuperada");					
+				}
+				else {
+					LOG.info("Multa al coche "+multa.getVehiculo().getMatricula()+" anulada");
+				}
 			}
 		} catch (NumberFormatException e) {
 			response = new ResponseEntity<Multa>(HttpStatus.BAD_REQUEST);
+			LOG.error(e);
 		} catch (Exception e) {
 			LOG.error(e);
 		}

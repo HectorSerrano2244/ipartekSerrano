@@ -35,7 +35,7 @@ public class ConnectionManager {
 								prop.getProperty("ddbb.user"),
 								prop.getProperty("ddbb.pass"));
 			
-			LOG.info("conexion establecida");
+			LOG.debug("conexion establecida");
 
 		}catch (Exception e) {
 			
