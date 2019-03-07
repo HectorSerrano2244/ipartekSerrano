@@ -1,0 +1,71 @@
+<app-navbar></app-navbar>
+<main role="main" class="container">
+  <div class="mb-3 mt-3">
+    <div class="col-3">
+      <a [routerLink]="['/principal']" routerLinkActive="active" class=" btn btn-outline-primary btn-block">Volver</a>
+    </div>
+    <div class="text-center mb-2 mt-2">
+      <span class="text-capitalize font-weight-bold h4">{{(estado == 'activas') ? 'multas' : 'multas anuladas'}}</span>
+    </div>
+    <app-alert [alert]="alert"></app-alert>
+  </div>
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>
+          Fecha de Alta
+        </th>     
+        <th *ngIf="estado == 'inactivas'">
+          Fecha de Baja
+        </th>
+        <th>
+          Concepto
+        </th>
+        <th>
+          Importe
+        </th>    
+        <th>
+          Matricula
+        </th>
+        <th>
+          Modelo
+        </th>
+        <th>
+          Km
+        </th>
+        <th>
+          {{(estado == 'activas') ? 'Anular' : 'Habilitar'}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of multas;let i = index">
+        <td>
+          <b>{{m.fechaAlta}}</b>
+        </td>
+        <td *ngIf="estado == 'inactivas'">
+          <b>{{m.fechaBaja}}</b>
+        </td>
+        <td>
+          {{m.concepto}}
+        </td>
+        <td>
+          {{m.importe}} €
+        </td>
+        <td>
+          {{m.vehiculo.matricula}}
+        </td>
+        <td>
+          {{m.vehiculo.modelo}}
+        </td>
+        <td>
+          {{m.vehiculo.km}}
+        </td>
+        <td>
+          <i *ngIf="estado == 'activas'" (click)="update('anular', multas[i])" class="fas fa-trash-alt btn btn-outline-danger"></i>
+          <i *ngIf="estado == 'inactivas'" (click)="update('recuperar', multas[i])" class="fas fa-trash-restore-alt btn btn-outline-primary"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>

@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+<main role="main" class="container p-2">
+	<form [formGroup]="formulario" (submit)="multar()">
+			<div class="mb-4">
+				<a [routerLink]="['/buscar-vehiculo']" routerLinkActive="active" class="btn btn-outline-primary col-2">
+					Volver
+				</a>
+			</div>
+			<div class="form-group">
+				<div class="form-row mb-4">
+					<div class="col-4">
+						<label class="sr-only" for="inlineFormInputGroup">Matricula</label>
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">Matricula</div>
+							</div>
+							<input type="text" disabled class="form-control" id="inlineFormInputGroup" value="{{vehiculo.matricula}}">
+						</div>
+					</div>
+					<div class="col-4">
+						<label class="sr-only" for="inlineFormInputGroup">Modelo</label>
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">Modelo</div>
+							</div>
+							<input type="text" disabled class="form-control" id="inlineFormInputGroup" value="{{vehiculo.modelo}}">
+						</div>
+					</div>
+					<div class="col-4">
+						<label class="sr-only" for="inlineFormInputGroup">km</label>
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">km</div>
+							</div>
+							<input type="text" disabled class="form-control" id="inlineFormInputGroup" value="{{vehiculo.km}}">
+						</div>
+					</div>
+				</div>
+				<div class="form-row mb-4">
+					<div class="col-6">
+						<label class="sr-only" for="inlineFormInputGroup">Importe</label>
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">Importe</div>
+							</div>
+							<input formControlName="importe" type="number" name="importe" class="form-control" placeholder="Al menos 10€">
+						</div>
+						<p *ngIf="formulario.controls.importe.invalid && formulario.controls.importe.touched" class="text-danger">*Al menos 10€</p>
+					</div>
+				</div>
+				<div class="form-row mb-4">
+					<div class="col-6">
+						<label class="sr-only" for="inlineFormInputGroup">Concepto</label>
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">Concepto</div>
+							</div>
+							<textarea formControlName="concepto" name="concepto" class="form-control" rows="5" placeholder="Longitud de 10 caracteres"></textarea>
+						</div>
+						<p *ngIf="formulario.controls.concepto.invalid && formulario.controls.concepto.touched" class="text-danger">*Longitud de 10 caracteres</p>
+					</div>
+				</div>
+			</div>
+		<button [disabled]="formulario.invalid" type="submit" class="btn btn-outline-primary btn-block col-2">Multar</button>
+	</form>
+</main>

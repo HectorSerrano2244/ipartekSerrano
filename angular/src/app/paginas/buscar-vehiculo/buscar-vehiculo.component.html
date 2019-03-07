@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+<main role="main" class="container p-2"> 
+	<form [formGroup]="formulario" (submit)="irAMultar()">
+		<div>
+			<a [routerLink]="['/principal']" routerLinkActive="active" class="btn btn-outline-primary mt-3 mb-3 col-3">
+				Volver
+			</a>
+		</div>
+		<app-alert [alert]="alert"></app-alert>
+		<div class="form-group">
+			<label for="matricula">Introducir Matricula a multar</label> 
+			<input formControlName="matricula" type="text" name="matricula" class="form-control" placeholder="4 numeros, 3 letras">
+			<p *ngIf="formulario.controls.matricula.invalid && formulario.controls.matricula.touched" class="text-danger">
+				*Recuerda 4 numeros y 3 letras
+			</p>
+		</div>
+		<button [disabled]="formulario.invalid" type="submit" class="btn btn-outline-primary btn-block">Buscar</button>
+	</form>
+</main>

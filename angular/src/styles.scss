@@ -1,0 +1,33 @@
+body.sinespacio{
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+  background: url('assets/img/fondo.jpg') !important;
+}
+
+.container {
+	height: 91vh;
+}
+input[type="search" i] {
+    padding: 1px;
+    width: 115px;
+    text-align:center;
+}
+
+.nocumple{
+	background-color: rgba(255,0,0,0.15);
+}
+.cumple{
+	background-color: rgba(0,255,0,0.15);
+}
+.transparente{
+	background-color: rgba(0,0,0,0) !important;
+}
+.transparente:hover{
+	background-color: rgba(0,0,0,0.1) !important;
+}
+.nocumpletxt{
+	color: red;
+}
+.cumpletxt{
+	color: green;
+}

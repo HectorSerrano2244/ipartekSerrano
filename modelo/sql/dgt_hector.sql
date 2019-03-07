@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `dgt-hector` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `dgt-hector`;
+CREATE DATABASE  IF NOT EXISTS `dgt_hector` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `dgt_hector`;
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: dgt-hector
+-- Host: 127.0.0.1    Database: dgt_hector
 -- ------------------------------------------------------
 -- Server version	8.0.12
 
@@ -184,11 +184,11 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Dumping events for database 'dgt-hector'
+-- Dumping events for database 'dgt_hector'
 --
 
 --
--- Dumping routines for database 'dgt-hector'
+-- Dumping routines for database 'dgt_hector'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `pa_agente_getById` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
