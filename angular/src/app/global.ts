@@ -1,3 +1,3 @@
 export const GLOBAL = {
-    "endpoint": "http://localhost:8088"
+    "endpoint": "http://localhost:8080"
 }

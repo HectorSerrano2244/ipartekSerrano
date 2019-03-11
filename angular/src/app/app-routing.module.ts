@@ -7,12 +7,11 @@ import { PrincipalComponent } from './paginas/principal/principal.component';
 import { LoginComponent } from './paginas/login/login.component';
 import { MultarComponent } from './paginas/multar/multar.component';
 import { VerMultasComponent } from './paginas/ver-multas/ver-multas.component';
-
-// Guards
-import { LoginGuard } from './guards/login.guard';
 import { Error404Component } from './paginas/error404/error404.component';
 import { ObjetivosComponent } from './paginas/objetivos/objetivos.component';
 
+// Guards
+import { LoginGuard } from './guards/login.guard';
 
 
 const routes: Routes = [
